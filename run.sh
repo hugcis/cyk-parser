@@ -9,9 +9,9 @@ Optional arguments:
     -tf | --train-file filename    The file containing the sentences to learn a new PCFG on.
     -o  | --output-file            Output file where the sentences are generated 
     -h  | --help                   Show this help message
-    -n  | --n-proc                 Number of parallel processes to use. Default is 
+    -n  | --n-proc                 Number of parallel processes to use. Default is
                                    given by Python's os.cpu_count()
-    
+
 Example usage:
     ./run.sh input_tokenized -tf train_sentences.mrg_strict"
 }

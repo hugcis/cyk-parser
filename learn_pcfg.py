@@ -184,7 +184,7 @@ def process_line(line, lexicon, grammar):
 def chomsky_normal_form(grammar, normalize=True):
     """ Pass the given grammar in Chomsky's normal form (CNF). 
 
-    Returns: 
+    Returns:
         The new grammar in CNF
     """
     grammar = binarize_rules(grammar)

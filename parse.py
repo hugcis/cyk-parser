@@ -96,7 +96,7 @@ def process_line(sent, de_binarize=True):
         return None
 
 
-def process_file(out_fname, n_proc):
+def process_file(out_fname='evaluation_data.parser_output', n_proc=0):
     f_out = open(out_fname, 'w')
     data_in = fileinput.input()
     if not n_proc:
