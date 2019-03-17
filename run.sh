@@ -13,7 +13,9 @@ Optional arguments:
                                    given by Python's os.cpu_count()
 
 Example usage:
-    ./run.sh input_tokenized -tf train_sentences.mrg_strict"
+    ./run.sh input_tokenized -tf train_sentences.mrg_strict
+it is equivalent to 
+    ./run.sh -tf train_sentences.mrg_strict -o evaluation_data.parser_output < input_tokenized"
 }
 
 re_train()
