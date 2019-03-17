@@ -1,5 +1,5 @@
 """ Script for tokenizing the content of a file passed as argument.
-Writes the tokenized sentences to the second argument of the script. 
+Writes the tokenized sentences to the second argument of the script.
 """
 
 import re
@@ -7,8 +7,9 @@ import sys
 import fileinput
 from learn_pcfg import ignores_tags, leaves
 
+
 def tokenize_eval(sent):
-    sent = ignores_tags.sub(r'(\g<1>', 
+    sent = ignores_tags.sub(r'(\g<1>',
                             sent.strip('\n')[2:-1])
     tokens = []
     for match in leaves.finditer(sent):

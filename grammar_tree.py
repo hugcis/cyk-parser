@@ -1,6 +1,7 @@
 class NotInGrammarError(Exception):
     pass
 
+
 class Tree:
     def __init__(self, val, children, word=None):
         self.val = val
@@ -36,21 +37,18 @@ class Tree:
                 "Sentence could not be produced with the grammar")
 
         if len(tokens) == 1:
-            return Tree('SENT', 
-                        [Tree(subs[1], 
-                              [Tree(subs[2], [], tokens[0])])
-                        ])
-        
-        
-        base_tree = Tree('SENT', 
-                         [Tree.build_tree(stem, 0, 
-                                          subs[0], subs[1], 
+            return Tree('SENT',
+                        [Tree(subs[1],
+                              [Tree(subs[2], [], tokens[0])])])
+
+        base_tree = Tree('SENT',
+                         [Tree.build_tree(stem, 0,
+                                          subs[0], subs[1],
                                           tokens),
-                         Tree.build_tree(stem, subs[0], 
-                                         len(stem) - 1, subs[2], 
-                                         tokens)])
+                          Tree.build_tree(stem, subs[0],
+                                          len(stem) - 1, subs[2],
+                                          tokens)])
         return base_tree
-        
 
     @classmethod
     def build_tree(self, stem, l_idx, r_idx, val, tokens):
@@ -58,11 +56,11 @@ class Tree:
             return Tree(val, [], word=tokens.pop(0))
         else:
             subs = stem[l_idx][r_idx][val]
-            return Tree(val, 
-                        [Tree.build_tree(stem, l_idx, subs[0], 
+            return Tree(val,
+                        [Tree.build_tree(stem, l_idx, subs[0],
                                          subs[1], tokens),
-                        Tree.build_tree(stem, subs[0], 
-                                        r_idx, subs[2], tokens)])
+                         Tree.build_tree(stem, subs[0],
+                                         r_idx, subs[2], tokens)])
 
     def __str__(self):
         if len(self.children):

@@ -7,7 +7,10 @@ usage()
 First argument if given is the input filename containing the tokenized sentences to be parsed.
 Optional arguments:
     -tf | --train-file filename    The file containing the sentences to learn a new PCFG on.
-    -h | --help                    Show this help message
+    -o  | --output-file            Output file where the sentences are generated 
+    -h  | --help                   Show this help message
+    -n  | --n-proc                 Number of parallel processes to use. Default is 
+                                   given by Python's os.cpu_count()
     
 Example usage:
     ./run.sh input_tokenized -tf train_sentences.mrg_strict"
@@ -29,7 +32,7 @@ else
 fi
 
 output_file=/dev/stdout
-
+n_processes=0
 # Parse optional arguments
 while [ "$1" != "" ]; do
     case $1 in
@@ -39,6 +42,9 @@ while [ "$1" != "" ]; do
                                 ;;
         -o | --output-file )    shift
                                 output_file=$1
+                                ;;
+        -n | --n-proc )         shift
+                                n_processes=$1
                                 ;;
         -h | --help )           usage
                                 exit
@@ -50,4 +56,4 @@ while [ "$1" != "" ]; do
 done
 
 
-python parse.py $output_file < $input_file
+python parse.py $output_file $n_processes < $input_file
