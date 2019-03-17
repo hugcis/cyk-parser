@@ -1,12 +1,12 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1.2in, top=0.5in, bottom=1in]{geometry}
+\usepackage[margin=1.2in, top=0.3in, bottom=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 
 
-\title{Algorithms for Speech and NLP --- TD 2 (NLP)}
+\title{Algorithms for Speech and NLP --- TD 2 (NLP)\vspace{-2ex}}
 \author{Hugo Cisneros}
 \date{March 18th 2019}
 
@@ -58,10 +58,11 @@
         \label{fig:oov}
     \end{figure}
 
-    In the cases where the word isn't in the embedding dictionary, is is 
-    substituted with any word from the lexicon with levenshtein distance lower 
-    than 2 from it. This allows to deal with small typos that are common in 
-    user input. 
+    In the cases where the word isn't in the embedding dictionary, its POS tags
+    are found by averaging all possible POS tags and probabilities from words 
+    within a levenshtein distance of 3 form the original word. This allows to 
+    deal with small typos that are common in user input, while avoiding some 
+    mistakes that could arise when replacing a word by its closest neighbor. 
 
     For unknown group tokens of the form \texttt{xxxx\_xx\_xxx} that failed 
     the two first tests, the first part of the token \texttt{xxxx} is selected. 
@@ -78,12 +79,13 @@
     symbol. For 
     example, with the following sentence
     \texttt{Le juge d' Amiens se dessaisit du dossier.}, the token 
-    \texttt{dessaisit} is replaced by \texttt{dessaisi} by the OOV module, 
-    because it is only at a levenshtein distance of 1 from the original word. 
-    However, the function of 
-    this new word is radically different from the original one and the sentence
-    \texttt{Le juge d' Amiens se dessaisi du dossier.} cannot lead to a 
-    grammatically correct sentence when parsed with the CYK algorithm.
+    \texttt{dessaisit} is replaced by the word \texttt{dessaisi} by the OOV 
+    module, because it is only at a levenshtein distance of 1 from the original 
+    word.
+    However, the function and POS tags associated with
+    this new word are radically different from the original ones and the 
+    sentence \texttt{Le juge d' Amiens se dessaisi du dossier.} cannot lead to 
+    a grammatically correct sentence when parsed with the CYK algorithm.
 
     Similarly, the sentence \texttt{Dans la maladie de Paget , le remodelage 
     osseux est trop \\rapide et l' os nouveau se forme de façon désordonnée , 
@@ -93,4 +95,10 @@
     These two example are caused by sparsity issues with the model, and a 
     bigger training set of both words and sentences would help cope with these 
     problems.
+
+    The model could also be further improved by adding some refinements to the 
+    OOV module, since it cannot handle edge cases. Word embeddings have a very
+    high accuracy at finding the closest word in terms of function in the 
+    sentence whereas levenshtein distance is good at correcting spelling errors
+    but can also lead to problematic situations. 
 \end{document}
